@@ -1,0 +1,28 @@
+---
+title: "Importing Backups"
+description: "Restore your progress when switching devices or migrating from Tachiyomi."
+section: "Guides"
+order: 2
+sectionOrder: 100
+---
+
+# Importing backups
+
+Migrating devices or coming from Tachiyomi? IReader supports several backup formats to restore your library and reading progress.
+
+## Supported backup formats
+
+- **IReader JSON**: The native format produced by `Settings → Backup & Restore → Create backup`.
+
+## Export from your old device
+
+1. Open your previous reader app.
+2. Navigate to the backup/export option and generate a full backup including categories and history.
+3. Transfer the resulting file to your new device via cloud storage, USB, or ADB.
+
+## Restore in IReader
+
+1. Open **Settings → Backup & Restore → Restore backup**.
+2. Pick the exported backup file (`.json`).
+3. Confirm the import summary. Large libraries can take a few minutes.
+4. Restart the app to ensure the library rebuilds with fresh metadata.

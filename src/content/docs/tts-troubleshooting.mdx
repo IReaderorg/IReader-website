@@ -1,0 +1,173 @@
+---
+title: "TTS Troubleshooting"
+description: "Resolve common Text-to-Speech issues on IReader Desktop."
+section: "Guides"
+order: 5
+sectionOrder: 100
+---
+
+# TTS Troubleshooting Guide
+
+Having issues with Text-to-Speech on IReader Desktop? This guide covers common problems and their solutions.
+
+## TTS Not Starting
+
+### Voice Model Not Downloaded
+
+**Symptom**: TTS button is grayed out or shows an error when clicked.
+
+**Solution**:
+1. Go to **Settings → Text-to-Speech → Voice Models**.
+2. Download at least one voice model for your preferred language.
+3. Wait for the download to complete.
+4. Restart the reader view and try again.
+
+### Audio Device Issues
+
+**Symptom**: TTS starts but no sound is heard.
+
+**Solution**:
+1. Check your system volume and ensure it's not muted.
+2. Verify your audio output device is working (test with other apps).
+3. On Linux, ensure ALSA or PulseAudio is properly configured.
+4. Restart IReader Desktop and try again.
+
+## Playback Issues
+
+### Choppy or Stuttering Audio
+
+**Symptom**: Audio playback is interrupted or stutters frequently.
+
+**Solution**:
+1. Close other resource-intensive applications.
+2. Try a lower-quality voice model (requires less processing power).
+3. Ensure your system meets the minimum requirements (4GB RAM).
+4. Check for system updates and install any pending updates.
+
+### Audio Cuts Off Mid-Sentence
+
+**Symptom**: TTS stops unexpectedly during playback.
+
+**Solution**:
+1. Check if the chapter content is properly loaded.
+2. Try reloading the chapter (close and reopen).
+3. Verify the voice model file is not corrupted:
+   - Go to **Settings → Text-to-Speech → Voice Models**
+   - Delete the problematic model
+   - Re-download it
+
+### Wrong Language Being Spoken
+
+**Symptom**: TTS uses the wrong language for the content.
+
+**Solution**:
+1. Ensure you've downloaded the correct language model.
+2. Set the appropriate default voice in **Settings → Text-to-Speech → Default Voice**.
+3. Some books may have mixed-language content; manually switch voices as needed.
+
+## Word Highlighting Issues
+
+### Highlighting Not Working
+
+**Symptom**: Words are not highlighted during TTS playback.
+
+**Solution**:
+1. Enable highlighting in **Settings → Text-to-Speech → Highlighting**.
+2. Check if the highlight color is too similar to your background (adjust in settings).
+3. Restart the reader view.
+
+### Highlighting Out of Sync
+
+**Symptom**: Highlighted words don't match the spoken audio.
+
+**Solution**:
+1. Pause and resume playback to resync.
+2. If the issue persists, stop TTS and restart from the current position.
+3. Report persistent sync issues on [GitHub](https://github.com/IReaderorg/IReader/issues).
+
+## Voice Model Issues
+
+### Download Fails
+
+**Symptom**: Voice model download fails or gets stuck.
+
+**Solution**:
+1. Check your internet connection.
+2. Ensure you have sufficient disk space (50-200MB per model).
+3. Try downloading a different model first.
+4. Restart IReader Desktop and retry the download.
+5. If the issue persists, download models manually from the [IReader releases page](https://github.com/IReaderorg/IReader/releases).
+
+### Model Sounds Robotic
+
+**Symptom**: Voice quality is poor or unnatural.
+
+**Solution**:
+1. Try a higher-quality voice model (Medium or High quality).
+2. Adjust playback speed (sometimes slower speeds sound more natural).
+3. Experiment with different voice models for your language.
+
+## Performance Issues
+
+### High CPU Usage
+
+**Symptom**: IReader Desktop uses excessive CPU during TTS playback.
+
+**Solution**:
+1. Use a lower-quality voice model (requires less processing).
+2. Close other applications to free up system resources.
+3. Ensure your system meets the recommended requirements.
+4. Check for IReader updates that may include performance improvements.
+
+### Slow TTS Initialization
+
+**Symptom**: TTS takes a long time to start playing.
+
+**Solution**:
+1. This is normal for the first use after launching the app (model loading).
+2. Subsequent uses should be faster.
+3. If consistently slow, try reinstalling the voice model.
+4. Ensure your disk is not nearly full (affects read performance).
+
+## Platform-Specific Issues
+
+### Windows
+
+**Audio Driver Issues**:
+- Update your audio drivers from Device Manager.
+- Try switching between different audio output devices.
+- Run Windows Audio Troubleshooter.
+
+### macOS
+
+**Permission Issues**:
+- Grant IReader microphone/audio permissions in System Preferences → Security & Privacy.
+- Restart IReader after granting permissions.
+
+### Linux
+
+**Audio System Issues**:
+- Ensure ALSA or PulseAudio is installed and running.
+- Check audio permissions for the IReader process.
+- Test audio with: `speaker-test -t wav -c 2`
+
+## Still Having Issues?
+
+If you've tried the solutions above and still experience problems:
+
+1. **Check for Updates**: Ensure you're running the latest version of IReader Desktop.
+2. **Review Logs**: Check application logs in **Settings → Advanced → View Logs** for error messages.
+3. **Report a Bug**: Open an issue on [GitHub](https://github.com/IReaderorg/IReader/issues) with:
+   - Your operating system and version
+   - IReader Desktop version
+   - Voice model being used
+   - Steps to reproduce the issue
+   - Any error messages from logs
+4. **Ask the Community**: Join the [IReader Discord](https://discord.gg/HBU6zD8c5v) for help from other users and developers.
+
+## Related Resources
+
+- [TTS Setup Guide](/docs/tts-setup) - Initial configuration and usage
+- [Getting Started](/docs/getting-started) - General IReader setup
+- [FAQ](/docs/faq) - Common questions and answers
+

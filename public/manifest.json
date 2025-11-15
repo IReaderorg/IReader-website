@@ -1,0 +1,23 @@
+{
+  "name": "IReader - Open Source Novel Reader",
+  "short_name": "IReader",
+  "description": "A free and open-source novel reader for Android and Desktop with customizable reading experience, extension support, and Text-to-Speech capabilities.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#106e81",
+  "theme_color": "#106e81",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Generate IReader Icons</title>
+</head>
+<body>
+  <h1>IReader Icon Generator</h1>
+  <p>This page generates PNG icons from the SVG icon. Open in browser and click buttons to download.</p>
+  
+  <canvas id="canvas" style="border: 1px solid #ccc;"></canvas>
+  <br><br>
+  
+  <button onclick="generateIcon(16)">Generate 16x16</button>
+  <button onclick="generateIcon(32)">Generate 32x32</button>
+  <button onclick="generateIcon(192)">Generate 192x192</button>
+  <button onclick="generateIcon(512)">Generate 512x512</button>
+  
+  <script>
+    const svgString = `
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+        <defs>
+          <linearGradient id="iconGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#106e81;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#2b7f96;stop-opacity:1" />
+          </linearGradient>
+        </defs>
+        <rect width="64" height="64" rx="12" fill="url(#iconGradient)" />
+        <text
+          x="50%"
+          y="50%"
+          dominant-baseline="central"
+          text-anchor="middle"
+          font-family="'Noto Sans JP', 'Hiragino Kaku Gothic Pro', sans-serif"
+          font-size="34"
+          fill="#ffffff"
+          font-weight="600"
+        >
+          読
+        </text>
+      </svg>
+    `;
+    
+    function generateIcon(size) {
+      const canvas = document.getElementById('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      
+      const img = new Image();
+      const blob = new Blob([svgString], { type: 'image/svg+xml' });
+      const url = URL.createObjectURL(blob);
+      
+      img.onload = function() {
+        ctx.drawImage(img, 0, 0, size, size);
+        canvas.toBlob(function(blob) {
+          const link = document.createElement('a');
+          link.download = `icon-${size}x${size}.png`;
+          link.href = URL.createObjectURL(blob);
+          link.click();
+        });
+        URL.revokeObjectURL(url);
+      };
+      
+      img.src = url;
+    }
+  </script>
+</body>
+</html>
