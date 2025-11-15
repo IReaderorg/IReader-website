@@ -12,53 +12,185 @@ IReader thrives on community contributions. Whether you are fixing a typo, addin
 
 ## Before You Start
 
-Make sure your workstation can build and run the Android app:
+IReader is built with Kotlin Compose Multiplatform. Make sure your workstation has:
 
-- **Node.js 18+** (use [`nvm`](https://github.com/nvm-sh/nvm) if you juggle versions)
-- **Java 15+** (optionally managed with [`jenv`](https://www.jenv.be/))
-- **Android SDK & platform tools** from [Android Studio](https://developer.android.com/studio)
+- **Java 17+** (JDK 17 is recommended for Android development)
+- **Kotlin 1.9+** (managed by Gradle, no separate installation needed)
+- **Android Studio** (latest stable version) with the following components:
+  - Android SDK (API level 34 or higher)
+  - Android SDK Build-Tools
+  - Android SDK Platform-Tools
+  - Android SDK Command-line Tools
+  - Android Emulator (optional, for testing without a physical device)
+  - Kotlin plugin (usually pre-installed)
+
+### Setting Up Android Development Environment
+
+1. **Install Android Studio**: Download from [developer.android.com/studio](https://developer.android.com/studio)
+
+2. **Configure Android SDK**: Open Android Studio and navigate to:
+   - **Settings/Preferences** → **Appearance & Behavior** → **System Settings** → **Android SDK**
+   - Install the required SDK platforms and tools
+
+3. **Set Environment Variables**:
+   
+   On **macOS/Linux**, add to your `~/.bashrc`, `~/.zshrc`, or equivalent:
+   ```bash
+   export ANDROID_HOME=$HOME/Library/Android/sdk  # macOS
+   # export ANDROID_HOME=$HOME/Android/Sdk        # Linux
+   export PATH=$PATH:$ANDROID_HOME/emulator
+   export PATH=$PATH:$ANDROID_HOME/platform-tools
+   export PATH=$PATH:$ANDROID_HOME/tools
+   export PATH=$PATH:$ANDROID_HOME/tools/bin
+   ```
+
+   On **Windows**, add these to your System Environment Variables:
+   ```
+   ANDROID_HOME=C:\Users\<YourUsername>\AppData\Local\Android\Sdk
+   ```
+   Then add to PATH:
+   ```
+   %ANDROID_HOME%\platform-tools
+   %ANDROID_HOME%\tools
+   %ANDROID_HOME%\tools\bin
+   ```
+
+4. **Verify Installation**:
+   ```bash
+   # Check Java version
+   java -version
+   
+   # Check Android SDK
+   adb --version
+   
+   # List installed SDK packages
+   sdkmanager --list
+   ```
 
 ## Set Up Your Fork
 
 1. Fork the repository to your GitHub account.
-2. Clone your fork and install dependencies:
+2. Clone your fork:
 
    ```bash
    git clone https://github.com/<your-username>/IReader.git
    cd IReader
-   npm install
    ```
 
-3. Verify you can produce a release build (this also validates your toolchain):
+3. Verify you can produce a debug build (this validates your toolchain):
 
    ```bash
-   npm run buildRelease
+   # Build debug APK (on macOS/Linux)
+   ./gradlew assembleDebug
+   
+   # On Windows
+   gradlew.bat assembleDebug
+   
+   # Or build release APK (requires signing configuration)
+   ./gradlew assembleRelease
    ```
 
-If the Gradle build fails, confirm the Android SDK path and Java version are set correctly.
+   The APK will be generated at:
+   - Debug: `app/build/outputs/apk/debug/app-debug.apk`
+   - Release: `app/build/outputs/apk/release/app-release.apk`
+
+### Troubleshooting Build Issues
+
+If the Gradle build fails, try these solutions:
+
+- **SDK not found**: Verify `ANDROID_HOME` is set correctly and points to your SDK location
+- **Java version mismatch**: Ensure you're using JDK 17 (check with `java -version`)
+- **Gradle daemon issues**: Run `./gradlew --stop` then try building again
+- **Clean build**: Run `./gradlew clean` before building
+- **Cache issues**: Delete `.gradle` and `app/build` directories, then run `./gradlew clean`
+- **Kotlin compilation errors**: Ensure you have the latest Kotlin plugin in Android Studio
+- **Compose issues**: Verify your Gradle version supports Compose Multiplatform (check `gradle/wrapper/gradle-wrapper.properties`)
 
 ## Run IReader Locally
 
-1. Connect an Android device (with USB debugging) or start an emulator.
-2. Confirm the device is visible to ADB:
+### Option 1: Using a Physical Device
+
+1. **Enable USB Debugging** on your Android device:
+   - Go to **Settings** → **About Phone**
+   - Tap **Build Number** 7 times to enable Developer Options
+   - Go to **Settings** → **Developer Options**
+   - Enable **USB Debugging**
+
+2. Connect your device via USB and confirm it's visible to ADB:
 
    ```bash
    adb devices
    ```
 
-3. Start the Metro bundler:
+   You should see your device listed. If not, check USB drivers or try a different cable.
+
+3. Install and launch the app:
 
    ```bash
-   npm start
+   # Install debug build and run
+   ./gradlew installDebug
+   
+   # Or use Android Studio: Click the "Run" button (green play icon)
    ```
 
-4. In another terminal, install and launch the app:
+   The app will be installed and launched automatically on your connected device.
+
+### Option 2: Using an Android Emulator
+
+1. **Create an emulator** in Android Studio:
+   - Open **AVD Manager** (Tools → Device Manager)
+   - Click **Create Virtual Device**
+   - Select a device definition (e.g., Pixel 5)
+   - Choose a system image (API 34+ recommended)
+   - Finish setup and launch the emulator
+
+2. Verify the emulator is running:
 
    ```bash
-   npm run android
+   adb devices
    ```
 
-Metro supports fast refresh—save a file, then press `r` in the Metro window if you need a manual reload.
+3. Install and run the app:
+
+   ```bash
+   ./gradlew installDebug
+   
+   # Or use Android Studio: Select your emulator from the device dropdown and click "Run"
+   ```
+
+### Building Different Variants
+
+IReader supports multiple build variants and tasks:
+
+```bash
+# Build debug APK
+./gradlew assembleDebug
+
+# Build release APK (requires signing configuration)
+./gradlew assembleRelease
+
+# Install debug build on connected device
+./gradlew installDebug
+
+# Run all tests
+./gradlew test
+
+# Run Android instrumented tests
+./gradlew connectedAndroidTest
+
+# Build for specific architecture
+./gradlew assembleDebug -Parch=arm64-v8a
+
+# Generate a bundle for Play Store
+./gradlew bundleRelease
+```
+
+### Development Tips
+
+- **Hot Reload**: Compose Multiplatform supports hot reload in Android Studio. Make changes to your Kotlin code and see them reflected immediately.
+- **Preview**: Use `@Preview` annotations in your composables to preview UI components without running the app.
+- **Debugging**: Use Android Studio's debugger by setting breakpoints in your Kotlin code.
+- **Logs**: View logs with `adb logcat` or use Android Studio's Logcat panel.
 
 ## Coding Workflow
 
@@ -68,14 +200,30 @@ Metro supports fast refresh—save a file, then press `r` in the Metro window if
 
 ## Checks and Standards
 
-- **Linting**: Run ESLint locally before opening a PR.
+- **Code Style**: Follow Kotlin coding conventions and use ktlint for formatting.
 
   ```bash
-  npm run lint
+  # Check code style
+  ./gradlew ktlintCheck
+  
+  # Auto-format code
+  ./gradlew ktlintFormat
   ```
 
-- **Formatting**: Follow the existing TypeScript and React Native conventions. Configure your editor with Prettier/ESLint integration for consistent formatting.
-- **CI expectations**: Ensure your branch builds and lint checks pass; CI must be green before merge.
+- **Linting**: Run detekt for static code analysis:
+
+  ```bash
+  ./gradlew detekt
+  ```
+
+- **Testing**: Run unit tests before submitting:
+
+  ```bash
+  ./gradlew test
+  ```
+
+- **Formatting**: Follow the existing Kotlin and Compose conventions. Configure Android Studio with the project's code style settings (`.editorconfig`).
+- **CI expectations**: Ensure your branch builds, passes all tests, and lint checks; CI must be green before merge.
 
 ## Where to Help
 
