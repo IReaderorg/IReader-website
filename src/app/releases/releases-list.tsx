@@ -1,11 +1,33 @@
+"use client";
+
 import { Download } from "lucide-react";
 
 import { Markdown } from "@/components/markdown";
-import type { GitHubRelease } from "@/lib/github/releases";
+import type { GitHubRelease, GitHubAsset } from "@/lib/github/releases";
 
 interface ReleasesListProps {
   readonly releases: GitHubRelease[];
   readonly updatedAt: string | null;
+}
+
+function getRelativeTime(dateString: string): string {
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / (1000 * 60));
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const diffWeeks = Math.floor(diffDays / 7);
+  const diffMonths = Math.floor(diffDays / 30);
+  const diffYears = Math.floor(diffDays / 365);
+
+  if (diffMins < 1) return "just now";
+  if (diffMins < 60) return `${diffMins} minute${diffMins === 1 ? "" : "s"} ago`;
+  if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+  if (diffDays < 7) return `${diffDays} day${diffDays === 1 ? "" : "s"} ago`;
+  if (diffWeeks < 4) return `${diffWeeks} week${diffWeeks === 1 ? "" : "s"} ago`;
+  if (diffMonths < 12) return `${diffMonths} month${diffMonths === 1 ? "" : "s"} ago`;
+  return `${diffYears} year${diffYears === 1 ? "" : "s"} ago`;
 }
 
 export default function ReleasesList({
@@ -57,17 +79,52 @@ export default function ReleasesList({
                 <span className="text-xs text-[color-mix(in_srgb,_var(--color-muted)_70%,_transparent)]">
                   {release.tagName}
                 </span>
-                <div className="flex flex-wrap gap-2 text-xs text-[color-mix(in_srgb,_var(--color-muted)_68%,_transparent)]">
-                  {release.assets.map((asset) => (
-                    <a
-                      key={asset.url}
-                      href={asset.url}
-                      className="inline-flex items-center gap-1 rounded-sm border border-[var(--color-border)] px-2 py-1 hover:bg-[var(--color-accent-soft)]"
-                    >
-                      <Download size={12} strokeWidth={1.5} />
-                      {asset.label}
-                    </a>
-                  ))}
+                <div className="mt-3 overflow-x-auto">
+                  <table className="w-full text-xs">
+                    <thead>
+                      <tr className="border-b border-[var(--color-border)] text-left text-[color-mix(in_srgb,_var(--color-muted)_70%,_transparent)]">
+                        <th className="pb-2 pr-4 font-medium">File</th>
+                        <th className="pb-2 pr-4 font-medium">SHA256</th>
+                        <th className="pb-2 pr-4 font-medium">Size</th>
+                        <th className="pb-2 font-medium">Released</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {release.assets.map((asset) => (
+                        <tr
+                          key={asset.url}
+                          className="border-b border-[var(--color-border)] last:border-b-0"
+                        >
+                          <td className="py-2 pr-4">
+                            <a
+                              href={asset.url}
+                              className="inline-flex items-center gap-1.5 text-[var(--color-accent-strong)] hover:underline"
+                            >
+                              <Download size={12} strokeWidth={1.5} />
+                              {asset.label}
+                            </a>
+                          </td>
+                          <td className="py-2 pr-4 font-mono text-[color-mix(in_srgb,_var(--color-muted)_70%,_transparent)]">
+                            {asset.sha256 ? (
+                              <span title={asset.sha256}>
+                                sha256:{asset.sha256.slice(0, 8)}...
+                              </span>
+                            ) : (
+                              <span className="text-[color-mix(in_srgb,_var(--color-muted)_50%,_transparent)]">
+                                —
+                              </span>
+                            )}
+                          </td>
+                          <td className="py-2 pr-4 text-[color-mix(in_srgb,_var(--color-muted)_70%,_transparent)]">
+                            {asset.size}
+                          </td>
+                          <td className="py-2 text-[color-mix(in_srgb,_var(--color-muted)_70%,_transparent)]">
+                            {getRelativeTime(release.publishedAtRaw)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </header>
 

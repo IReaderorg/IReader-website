@@ -10,18 +10,33 @@ const getAndroidDownloadUrl = (): string => {
   
   // Try to detect architecture
   if (typeof window === "undefined") {
-    return `${baseUrl}/IReader-arm64-v8a-release.apk`;
+    return `${baseUrl}/IReader-arm64-v8a.apk`;
   }
   
   const userAgent = window.navigator.userAgent.toLowerCase();
   
-  // Check for 64-bit support
-  if (/arm64|aarch64/.test(userAgent)) {
-    return `${baseUrl}/IReader-arm64-v8a-release.apk`;
+  // Check for x86_64
+  if (/x86_64/.test(userAgent)) {
+    return `${baseUrl}/IReader-x86_64.apk`;
   }
   
-  // Default to universal/arm64 as it's most common on modern devices
-  return `${baseUrl}/IReader-arm64-v8a-release.apk`;
+  // Check for x86
+  if (/x86/.test(userAgent)) {
+    return `${baseUrl}/IReader-x86.apk`;
+  }
+  
+  // Check for arm64/aarch64
+  if (/arm64|aarch64/.test(userAgent)) {
+    return `${baseUrl}/IReader-arm64-v8a.apk`;
+  }
+  
+  // Check for armeabi-v7a (32-bit ARM)
+  if (/armv7|arm/.test(userAgent)) {
+    return `${baseUrl}/IReader-armeabi-v7a.apk`;
+  }
+  
+  // Default to arm64 as it's most common on modern devices
+  return `${baseUrl}/IReader-arm64-v8a.apk`;
 };
 
 const downloadLinks = [
@@ -32,18 +47,18 @@ const downloadLinks = [
   },
   {
     label: "Windows Desktop",
-    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/IReader-windows-x64.zip",
+    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/IReader-windows-x64-2.0.1.msi",
     description: "Desktop app for Windows 10 and later with TTS support.",
   },
   {
-    label: "macOS Desktop",
-    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/IReader-macos-universal.dmg",
-    description: "Desktop app for macOS 10.15+ with TTS support.",
+    label: "Linux AppImage",
+    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/IReader-x86_64.AppImage",
+    description: "Desktop app for Linux (ALSA/PulseAudio) with TTS support.",
   },
   {
-    label: "Linux Desktop",
-    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/IReader-linux-x64.AppImage",
-    description: "Desktop app for Linux (ALSA/PulseAudio) with TTS support.",
+    label: "Linux Deb",
+    getHref: () => "https://github.com/IReaderorg/IReader/releases/latest/download/ireader_2.0.1_amd64.deb",
+    description: "Debian/Ubuntu package for Linux with TTS support.",
   },
   {
     label: "Source code",

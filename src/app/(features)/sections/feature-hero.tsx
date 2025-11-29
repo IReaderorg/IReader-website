@@ -25,13 +25,11 @@ const getDownloadUrl = (platform: Platform): string => {
   
   switch (platform) {
     case "windows":
-      return `${baseUrl}/IReader-windows-x64.zip`;
-    case "macos":
-      return `${baseUrl}/IReader-macos-universal.dmg`;
+      return `${baseUrl}/IReader-windows-x64-2.0.1.msi`;
     case "linux":
-      return `${baseUrl}/IReader-linux-x64.AppImage`;
+      return `${baseUrl}/IReader-x86_64.AppImage`;
     case "android":
-      return `${baseUrl}/IReader-android.apk`;
+      return `${baseUrl}/IReader-arm64-v8a.apk`;
     default:
       return "https://github.com/IReaderorg/IReader/releases";
   }
