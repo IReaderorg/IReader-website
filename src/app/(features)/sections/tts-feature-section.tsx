@@ -81,7 +81,7 @@ export default function TTSFeatureSection(): ReactElement {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-neutral-50 dark:bg-neutral-900/50">
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-[var(--background)]">
       {/* Background */}
       <div className="absolute inset-0 dotted-pattern opacity-50" />
       
@@ -115,13 +115,13 @@ export default function TTSFeatureSection(): ReactElement {
               <Headphones className="w-4 h-4" />
               Desktop Feature
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)]">
               Immersive{" "}
               <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
                 Text-to-Speech
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <p className="text-lg md:text-xl text-[var(--foreground-muted)] leading-relaxed">
               Transform your reading experience with natural AI narration powered by Piper TTS. 
               High-quality, offline, with word-level highlighting.
             </p>
@@ -132,10 +132,10 @@ export default function TTSFeatureSection(): ReactElement {
             
             {/* Left: Interactive Demo */}
             <div className="order-2 lg:order-1">
-              <div className="relative p-6 md:p-8 rounded-3xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl overflow-hidden">
+              <div className="relative p-6 md:p-8 rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-xl overflow-hidden">
                 {/* Gradient Border Effect */}
                 <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-purple-500 to-blue-500 opacity-0 hover:opacity-100 transition-opacity duration-500" style={{ padding: '2px' }}>
-                  <div className="absolute inset-[2px] rounded-3xl bg-white dark:bg-neutral-900" />
+                  <div className="absolute inset-[2px] rounded-3xl bg-[var(--surface)]" />
                 </div>
                 
                 <div className="relative z-10 flex flex-col gap-6">
@@ -146,7 +146,7 @@ export default function TTSFeatureSection(): ReactElement {
                         <Volume2 className="w-6 h-6" />
                       </div>
                       <div className="flex flex-col">
-                        <span className="font-semibold text-neutral-900 dark:text-white">Now Playing</span>
+                        <span className="font-semibold text-[var(--foreground)]">Now Playing</span>
                         <span className="text-sm text-neutral-500 dark:text-neutral-400">Chapter 1: The Beginning</span>
                       </div>
                     </div>

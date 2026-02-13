@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Download, Github, ArrowRight, Play, Star, Users, BookOpen, Sparkles, Zap, Globe } from "lucide-react";
+import Image from "next/image";
+import { Download, Github, ArrowRight, Star, Users, BookOpen, Sparkles, Zap, Globe } from "lucide-react";
 import type { ReactElement } from "react";
 import { useState, useEffect, useRef } from "react";
 
@@ -99,7 +100,7 @@ export default function FeatureHero(): ReactElement {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#0a0a0b]">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[var(--background)]">
       {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Gradient Mesh */}
@@ -132,17 +133,17 @@ export default function FeatureHero(): ReactElement {
           {/* Main Headline */}
           <div className={`flex flex-col gap-6 max-w-4xl transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-balance">
-              <span className="text-neutral-900 dark:text-white">Read Your Way with</span>
+              <span className="text-[var(--foreground)]">Read Your Way with</span>
               <br />
               <span className="bg-gradient-to-r from-purple-600 via-violet-500 to-blue-500 bg-clip-text text-transparent">
                 IReader
               </span>
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl md:text-2xl text-[var(--foreground-muted)] max-w-2xl mx-auto leading-relaxed">
               The ultimate open-source reader for{" "}
-              <span className="text-neutral-900 dark:text-white font-medium">light novels</span>,{" "}
-              <span className="text-neutral-900 dark:text-white font-medium">web novels</span>, and{" "}
-              <span className="text-neutral-900 dark:text-white font-medium">ebooks</span>
+              <span className="text-[var(--foreground)] font-medium">light novels</span>,{" "}
+              <span className="text-[var(--foreground)] font-medium">web novels</span>, and{" "}
+              <span className="text-[var(--foreground)] font-medium">ebooks</span>
             </p>
           </div>
 
@@ -211,27 +212,20 @@ export default function FeatureHero(): ReactElement {
 
           {/* App Preview */}
           <div className={`w-full max-w-5xl transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <div className="relative rounded-3xl bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 p-2 shadow-2xl">
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500/10 to-blue-500/10" />
-              <div className="relative rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
-                {/* Browser Chrome */}
-                <div className="flex items-center gap-2 px-4 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
-                    <div className="w-3 h-3 rounded-full bg-green-400" />
+            <div className="relative rounded-3xl bg-[var(--surface)] border border-[var(--border)] shadow-2xl overflow-hidden p-8">
+              <div className="flex flex-col items-center justify-center gap-6 text-center">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                  <div className="flex flex-col items-center gap-3 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+                    <span className="text-4xl">📚</span>
+                    <span className="font-medium text-[var(--foreground)]">Library</span>
                   </div>
-                  <div className="flex-1 flex justify-center">
-                    <div className="px-4 py-1 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-xs text-neutral-500">
-                      ireader.app
-                    </div>
+                  <div className="flex flex-col items-center gap-3 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+                    <span className="text-4xl">📖</span>
+                    <span className="font-medium text-[var(--foreground)]">Reader</span>
                   </div>
-                </div>
-                {/* App Content Placeholder */}
-                <div className="aspect-[16/9] bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-purple-950/20 dark:via-neutral-900 dark:to-blue-950/20 flex items-center justify-center">
-                  <div className="flex flex-col items-center gap-4 text-neutral-400">
-                    <Play className="w-16 h-16 opacity-20" />
-                    <span className="text-sm">App Preview</span>
+                  <div className="flex flex-col items-center gap-3 p-4 rounded-xl bg-[var(--background)] border border-[var(--border)]">
+                    <span className="text-4xl">🎨</span>
+                    <span className="font-medium text-[var(--foreground)]">Themes</span>
                   </div>
                 </div>
               </div>
@@ -242,7 +236,7 @@ export default function FeatureHero(): ReactElement {
       </div>
 
       {/* Bottom Fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-[#0a0a0b] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[var(--background)] to-transparent pointer-events-none" />
     </section>
   );
 }

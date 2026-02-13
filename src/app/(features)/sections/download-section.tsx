@@ -96,7 +96,7 @@ export default function DownloadSection(): ReactElement {
   }, []);
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-white dark:bg-[#0a0a0b]">
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-[var(--background)]">
       {/* Background */}
       <div className="absolute inset-0" style={{ background: 'var(--gradient-mesh)' }} />
       
@@ -113,13 +113,13 @@ export default function DownloadSection(): ReactElement {
               <Download className="w-4 h-4" />
               Get Started
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)]">
               Download{" "}
               <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
                 IReader
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <p className="text-lg md:text-xl text-[var(--foreground-muted)] leading-relaxed">
               Choose your platform and start reading in minutes. 
               Free forever, no account required.
             </p>
@@ -165,7 +165,7 @@ export default function DownloadSection(): ReactElement {
                       <CategoryIcon className="w-5 h-5" />
                     </div>
                     <div className="flex flex-col">
-                      <h3 className="text-lg font-semibold text-neutral-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-[var(--foreground)]">
                         {category.category}
                       </h3>
                       <span className="text-sm text-neutral-500 dark:text-neutral-400">
@@ -190,7 +190,7 @@ export default function DownloadSection(): ReactElement {
                           <span className="text-2xl">{item.icon}</span>
                           <div className="flex-1 flex flex-col gap-1">
                             <div className="flex items-center gap-2">
-                              <span className="font-semibold text-neutral-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                              <span className="font-semibold text-[var(--foreground)] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                                 {item.label}
                               </span>
                               {item.badge && (

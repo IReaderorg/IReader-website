@@ -137,9 +137,11 @@ export default function RootLayout({
                 try {
                   var theme = localStorage.getItem('theme');
                   if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                    document.documentElement.classList.remove('light', 'dark');
                     document.documentElement.classList.add('dark');
                     document.documentElement.style.colorScheme = 'dark';
                   } else {
+                    document.documentElement.classList.remove('light', 'dark');
                     document.documentElement.classList.add('light');
                     document.documentElement.style.colorScheme = 'light';
                   }

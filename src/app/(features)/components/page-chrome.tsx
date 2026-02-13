@@ -267,7 +267,7 @@ export default function PageChrome({
       </main>
 
       {/* Footer */}
-      <footer className="mt-auto relative overflow-hidden border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900/50">
+      <footer className="mt-auto relative overflow-hidden border-t border-[var(--border)] bg-[var(--background)]">
         <div className="page-shell">
           <div className="py-12 md:py-16 flex flex-col gap-8">
             
@@ -284,7 +284,7 @@ export default function PageChrome({
                     IReader
                   </span>
                 </Link>
-                <p className="text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+                <p className="text-sm text-[var(--foreground-muted)] leading-relaxed">
                   Open source reader app for Android and Desktop. Read light novels, web novels, and ebooks with complete privacy.
                 </p>
                 <div className="flex items-center gap-3">

@@ -105,7 +105,7 @@ export default function FeatureHighlights(): ReactElement {
   const { ref, isVisible } = useScrollAnimation();
 
   return (
-    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-neutral-50 dark:bg-neutral-900/50">
+    <section ref={ref} className="relative py-24 md:py-32 overflow-hidden bg-[var(--background)]">
       {/* Background */}
       <div className="absolute inset-0 dotted-pattern opacity-50" />
       
@@ -122,13 +122,13 @@ export default function FeatureHighlights(): ReactElement {
               <Sparkles className="w-4 h-4" />
               Features
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--foreground)]">
               Everything you need for{" "}
               <span className="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent">
                 reading
               </span>
             </h2>
-            <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 leading-relaxed">
+            <p className="text-lg md:text-xl text-[var(--foreground-muted)] leading-relaxed">
               Powerful features designed for the ultimate reading experience. 
               Cross-platform, customizable, and completely private.
             </p>
@@ -153,10 +153,10 @@ export default function FeatureHighlights(): ReactElement {
 
                   {/* Content */}
                   <div className="flex flex-col gap-2">
-                    <h3 className="text-xl font-semibold text-neutral-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                    <h3 className="text-xl font-semibold text-[var(--foreground)] group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
                       {feature.title}
                     </h3>
-                    <p className={`text-neutral-600 dark:text-neutral-400 leading-relaxed ${isLarge ? 'text-base' : 'text-sm'}`}>
+                    <p className={`text-[var(--foreground-muted)] leading-relaxed ${isLarge ? 'text-base' : 'text-sm'}`}>
                       {feature.description}
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export default function FeatureHighlights(): ReactElement {
 
           {/* Bottom CTA */}
           <div className={`flex flex-col items-center gap-6 text-center transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-            <p className="text-neutral-600 dark:text-neutral-400">
+            <p className="text-[var(--foreground-muted)]">
               And many more features to discover...
             </p>
             <div className="flex flex-wrap justify-center gap-4">

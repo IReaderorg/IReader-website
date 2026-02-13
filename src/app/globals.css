@@ -54,6 +54,9 @@
   --surface-glass: rgba(255, 255, 255, 0.9);
   --surface-glass-strong: rgba(255, 255, 255, 0.95);
   
+  /* Background Gradient for Sections */
+  --gradient-background: linear-gradient(to bottom, transparent, rgba(124, 58, 237, 0.08), transparent);
+  
   /* Foreground Colors */
   --foreground: #0a0a0a;
   --foreground-muted: #525252;
@@ -230,6 +233,9 @@
                    radial-gradient(at 100% 0%, rgba(96, 165, 250, 0.1) 0px, transparent 50%),
                    radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.08) 0px, transparent 50%),
                    radial-gradient(at 0% 100%, rgba(96, 165, 250, 0.08) 0px, transparent 50%);
+  
+  /* Background Gradient for Sections */
+  --gradient-background: linear-gradient(to bottom, transparent, rgba(168, 85, 247, 0.15), transparent);
 }
 
 /* Light mode explicit class */

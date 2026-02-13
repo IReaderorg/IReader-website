@@ -12,24 +12,24 @@ const galleryItems: Array<{
     title: "Library organization",
     description:
       "Pin favourites, create smart shelves, and track reading progress in one place.",
-    imageDark: "/screens/library-dark.png",
-    imageLight: "/screens/library-light.png",
+    imageDark: "/screens/library-screen.jpg",
+    imageLight: "/screens/library-screen.jpg",
     alt: "IReader library view showing organized book collection",
   },
   {
     title: "Book details",
     description:
       "View comprehensive information, manage chapters, and customize reading settings per book.",
-    imageDark: "/screens/detail-dark.png",
-    imageLight: "/screens/detail-light.png",
+    imageDark: "/screens/book-screen.jpg",
+    imageLight: "/screens/book-screen.jpg",
     alt: "IReader book detail page with chapter list and metadata",
   },
   {
     title: "Focused reading surface",
     description:
       "Choose paged or continuous layouts, adjust margins, and enable distraction-free mode.",
-    imageDark: "/screens/reader-dark.png",
-    imageLight: "/screens/reader-light.png",
+    imageDark: "/screens/reader-screen.jpg",
+    imageLight: "/screens/reader-screen.jpg",
     alt: "IReader reading interface with customizable layout",
   },
 ];
