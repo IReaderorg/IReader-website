@@ -85,10 +85,10 @@ export default function FeatureHero(): ReactElement {
           <div className="flex flex-col gap-[var(--spacing-8)]">
             <div className="flex flex-col gap-[var(--spacing-6)] text-center">
               <h1 className="text-4xl sm:text-[3rem] leading-[1.05] font-semibold tracking-[-0.03em] text-balance bg-gradient-to-r from-[var(--color-brand-primary)] via-[var(--color-brand-primary-light)] to-[var(--color-brand-accent)] bg-clip-text text-transparent">
-                A cross-platform novel reader for Android & Desktop
+                IReader - Open Source Reader App for Android & Desktop
               </h1>
               <p className="mx-auto max-w-3xl text-base sm:text-lg leading-relaxed text-[color-mix(in_srgb,_var(--color-foreground)_70%,_transparent)]">
-                IReader brings a polished reading experience to Android and Desktop. Enjoy natural Text-to-Speech with Piper TTS, curate sources with extensions, and keep everything synced locally—no ads, no lock-in, just community-built features.
+                The best free reader app for light novels, web novels, and ebooks. Download IReader for offline reading with customizable themes, no ads, and complete privacy. Perfect for novel enthusiasts who want a powerful, open-source reader app.
               </p>
             </div>
             <div className="flex flex-col items-center justify-center gap-[var(--spacing-3)] sm:flex-row">

@@ -1,0 +1,25 @@
+# robots.txt for IReader - Open Source Reader App
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://ireaderorg.netlify.app/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 0
+
+# Allow all search engines to index
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
