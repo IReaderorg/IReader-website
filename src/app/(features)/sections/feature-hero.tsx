@@ -1,145 +1,248 @@
 "use client";
 
 import Link from "next/link";
-import { Download, Github } from "lucide-react";
+import { Download, Github, ArrowRight, Play, Star, Users, BookOpen, Sparkles, Zap, Globe } from "lucide-react";
 import type { ReactElement } from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 type Platform = "windows" | "macos" | "linux" | "android" | "unknown";
 
 const getPlatform = (): Platform => {
   if (typeof window === "undefined") return "unknown";
-  
   const userAgent = window.navigator.userAgent.toLowerCase();
-  
   if (/android/.test(userAgent)) return "android";
   if (/win/.test(userAgent)) return "windows";
   if (/mac/.test(userAgent)) return "macos";
   if (/linux/.test(userAgent)) return "linux";
-  
   return "unknown";
 };
 
 const getDownloadUrl = (platform: Platform): string => {
   const baseUrl = "https://github.com/IReaderorg/IReader/releases/latest/download";
-  
   switch (platform) {
-    case "windows":
-      return `${baseUrl}/IReader-windows-x64-2.0.1.msi`;
-    case "linux":
-      return `${baseUrl}/IReader-x86_64.AppImage`;
-    case "android":
-      return `${baseUrl}/IReader-arm64-v8a.apk`;
-    default:
-      return "https://github.com/IReaderorg/IReader/releases";
+    case "windows": return `${baseUrl}/IReader-windows-x64-2.0.1.msi`;
+    case "linux": return `${baseUrl}/IReader-x86_64.AppImage`;
+    case "android": return `${baseUrl}/IReader-arm64-v8a.apk`;
+    default: return "https://github.com/IReaderorg/IReader/releases";
   }
 };
 
-const getPlatformLabel = (platform: Platform): string => {
-  switch (platform) {
-    case "windows":
-      return "Download for Windows";
-    case "macos":
-      return "Download for macOS";
-    case "linux":
-      return "Download for Linux";
-    case "android":
-      return "Download for Android";
-    default:
-      return "Download";
-  }
+const platformIcons: Record<Platform, string> = {
+  windows: "🖥️",
+  macos: "🍎",
+  linux: "🐧",
+  android: "📱",
+  unknown: "📦"
 };
 
-const metricCards = [
-  {
-    label: "Platforms",
-    value: "2",
-    description: "Android & Desktop support for seamless reading",
-  },
-  {
-    label: "Extensions",
-    value: "200+",
-    description: "Community-maintained sources ready to install",
-  },
-  {
-    label: "Contributors",
-    value: "50+",
-    description: "Developers improving IReader together",
-  },
+// Animated Counter Component
+function AnimatedCounter({ 
+  value, 
+  suffix = "", 
+  duration = 2000 
+}: { 
+  value: number; 
+  suffix?: string; 
+  duration?: number;
+}): ReactElement {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setIsVisible(true);
+      },
+      { threshold: 0.1 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+    let startTime: number;
+    const animate = (currentTime: number) => {
+      if (!startTime) startTime = currentTime;
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      const easeOut = 1 - Math.pow(1 - progress, 4);
+      setDisplayValue(Math.floor(value * easeOut));
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [isVisible, value, duration]);
+
+  return <span ref={ref} className="tabular-nums">{displayValue.toLocaleString()}{suffix}</span>;
+}
+
+const stats = [
+  { label: "Active Users", value: 50000, suffix: "+", icon: Users },
+  { label: "Extensions", value: 200, suffix: "+", icon: Zap },
+  { label: "GitHub Stars", value: 1200, suffix: "+", icon: Star },
+  { label: "Contributors", value: 50, suffix: "+", icon: Globe },
+];
+
+const features = [
+  { icon: BookOpen, label: "Light Novels" },
+  { icon: Sparkles, label: "AI-Powered TTS" },
+  { icon: Globe, label: "200+ Sources" },
 ];
 
 export default function FeatureHero(): ReactElement {
   const [platform, setPlatform] = useState<Platform>("unknown");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setPlatform(getPlatform());
+    setMounted(true);
   }, []);
 
-  const downloadUrl = getDownloadUrl(platform);
-  const downloadLabel = getPlatformLabel(platform);
-
   return (
-    <section className="pt-[calc(var(--spacing-20)+var(--spacing-4))] pb-[var(--spacing-20)] bg-[var(--color-background)]">
-      <div className="page-shell">
-        <div className="flex flex-col gap-[var(--spacing-16)]">
-          <div className="flex flex-col gap-[var(--spacing-8)]">
-            <div className="flex flex-col gap-[var(--spacing-6)] text-center">
-              <h1 className="text-4xl sm:text-[3rem] leading-[1.05] font-semibold tracking-[-0.03em] text-balance bg-gradient-to-r from-[var(--color-brand-primary)] via-[var(--color-brand-primary-light)] to-[var(--color-brand-accent)] bg-clip-text text-transparent">
-                IReader - Open Source Reader App for Android & Desktop
-              </h1>
-              <p className="mx-auto max-w-3xl text-base sm:text-lg leading-relaxed text-[color-mix(in_srgb,_var(--color-foreground)_70%,_transparent)]">
-                The best free reader app for light novels, web novels, and ebooks. Download IReader for offline reading with customizable themes, no ads, and complete privacy. Perfect for novel enthusiasts who want a powerful, open-source reader app.
-              </p>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-[var(--spacing-3)] sm:flex-row">
-              <Link
-                href={downloadUrl}
-                className="inline-flex items-center justify-center gap-[var(--spacing-2)] rounded-[var(--radius-md)] bg-gradient-to-r from-[var(--color-brand-primary)] to-[var(--color-brand-primary-light)] px-[var(--spacing-6)] py-[var(--spacing-3)] min-h-[44px] text-sm font-semibold tracking-tight text-white transition-all duration-[var(--transition-base)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2"
-                aria-label={downloadLabel}
-              >
-                <Download className="h-4 w-4" aria-hidden="true" />
-                {downloadLabel}
-              </Link>
-              <Link
-                href="https://github.com/IReaderorg/IReader"
-                className="inline-flex items-center justify-center gap-[var(--spacing-2)] rounded-[var(--radius-md)] border border-[var(--color-border)] bg-[var(--color-surface)] px-[var(--spacing-6)] py-[var(--spacing-3)] min-h-[44px] text-sm font-semibold tracking-tight text-[color-mix(in_srgb,_var(--color-foreground)_75%,_transparent)] transition-all duration-[var(--transition-base)] hover:bg-[var(--color-brand-primary)] hover:text-white hover:border-[var(--color-brand-primary)] hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--brand-primary)] focus-visible:ring-offset-2"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="View IReader source code on GitHub (opens in new tab)"
-              >
-                <Github className="h-4 w-4" aria-hidden="true" />
-                View source on GitHub
-              </Link>
-            </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-[#0a0a0b]">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {/* Gradient Mesh */}
+        <div className="absolute inset-0" style={{ background: 'var(--gradient-mesh)' }} />
+        
+        {/* Floating Orbs */}
+        <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-purple-400/20 to-blue-400/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-br from-blue-400/20 to-purple-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-purple-300/10 to-blue-300/10 rounded-full blur-3xl" />
+        
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 grid-pattern opacity-[0.3] dark:opacity-[0.1]" />
+        
+        {/* Gradient Lines */}
+        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-purple-500/20 to-transparent" />
+        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
+      </div>
+
+      <div className="page-shell relative z-10 py-20 md:py-32">
+        <div className="flex flex-col items-center text-center gap-12 md:gap-16">
+          
+          {/* Badge */}
+          <div className={`transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-purple-100 to-blue-100 dark:from-purple-900/30 dark:to-blue-900/30 border border-purple-200/50 dark:border-purple-500/20 text-sm font-medium text-purple-700 dark:text-purple-300">
+              <Sparkles className="w-4 h-4" />
+              Open Source • Free Forever • No Ads
+            </span>
           </div>
 
-          <div className="flex flex-col gap-[var(--spacing-4)] md:flex-row md:flex-wrap" role="list" aria-label="IReader statistics">
-            {metricCards.map(({ label, value, description }) => (
-              <article
+          {/* Main Headline */}
+          <div className={`flex flex-col gap-6 max-w-4xl transition-all duration-700 delay-100 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.1] text-balance">
+              <span className="text-neutral-900 dark:text-white">Read Your Way with</span>
+              <br />
+              <span className="bg-gradient-to-r from-purple-600 via-violet-500 to-blue-500 bg-clip-text text-transparent">
+                IReader
+              </span>
+            </h1>
+            <p className="text-lg sm:text-xl md:text-2xl text-neutral-600 dark:text-neutral-400 max-w-2xl mx-auto leading-relaxed">
+              The ultimate open-source reader for{" "}
+              <span className="text-neutral-900 dark:text-white font-medium">light novels</span>,{" "}
+              <span className="text-neutral-900 dark:text-white font-medium">web novels</span>, and{" "}
+              <span className="text-neutral-900 dark:text-white font-medium">ebooks</span>
+            </p>
+          </div>
+
+          {/* Feature Pills */}
+          <div className={`flex flex-wrap justify-center gap-3 transition-all duration-700 delay-200 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            {features.map(({ icon: Icon, label }) => (
+              <span
                 key={label}
-                role="listitem"
-                className="flex min-w-[200px] flex-1 flex-col items-center gap-[var(--spacing-2)] rounded-[var(--radius-lg)] bg-[var(--color-background-soft)] px-[var(--spacing-5)] py-[var(--spacing-4)] text-center border border-transparent bg-gradient-to-br from-transparent to-transparent hover:border-[var(--color-brand-primary)] transition-all duration-[var(--transition-base)] hover:shadow-[var(--shadow-md)] hover:-translate-y-1"
-                style={{
-                  backgroundImage: 'linear-gradient(var(--color-background-soft), var(--color-background-soft)), linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-accent))',
-                  backgroundOrigin: 'border-box',
-                  backgroundClip: 'padding-box, border-box',
-                }}
-                aria-label={`${label}: ${value} - ${description}`}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-neutral-900/80 border border-neutral-200 dark:border-neutral-800 text-sm font-medium text-neutral-700 dark:text-neutral-300 shadow-sm hover:border-purple-300 dark:hover:border-purple-700 transition-colors"
               >
-                <span className="text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[color-mix(in_srgb,_var(--color-muted)_62%,_transparent)]">
-                  {label}
-                </span>
-                <span className="text-base font-semibold text-[color-mix(in_srgb,_var(--color-foreground)_86%,_transparent)]">
-                  {value}
-                </span>
-                <span className="text-[0.7rem] leading-5 text-[color-mix(in_srgb,_var(--color-foreground)_58%,_transparent)]">
-                  {description}
-                </span>
-              </article>
+                <Icon className="w-4 h-4 text-purple-500" />
+                {label}
+              </span>
             ))}
           </div>
+
+          {/* CTA Buttons */}
+          <div className={`flex flex-col sm:flex-row items-center gap-4 transition-all duration-700 delay-300 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <Link
+              href={getDownloadUrl(platform)}
+              className="group relative inline-flex items-center justify-center gap-3 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-500 px-8 py-4 text-base font-semibold text-white shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-purple-500/30 hover:scale-[1.02]"
+            >
+              <span className="absolute inset-0 rounded-2xl bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+              <Download className="w-5 h-5 relative" />
+              <span className="relative">Download for {platform === "unknown" ? "Free" : platform.charAt(0).toUpperCase() + platform.slice(1)}</span>
+              <span className="relative text-lg">{platformIcons[platform]}</span>
+            </Link>
+            
+            <Link
+              href="https://github.com/IReaderorg/IReader"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group inline-flex items-center justify-center gap-3 rounded-2xl bg-white dark:bg-neutral-900 border-2 border-neutral-200 dark:border-neutral-800 px-8 py-4 text-base font-semibold text-neutral-900 dark:text-white transition-all duration-300 hover:border-purple-300 dark:hover:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-950/30"
+            >
+              <Github className="w-5 h-5" />
+              <span>Star on GitHub</span>
+              <ArrowRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+            </Link>
+          </div>
+
+          {/* Stats Grid */}
+          <div className={`w-full max-w-4xl transition-all duration-700 delay-400 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {stats.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <div
+                    key={stat.label}
+                    className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl bg-white/80 dark:bg-neutral-900/80 border border-neutral-200/50 dark:border-neutral-800/50 shadow-sm hover:shadow-lg hover:border-purple-200 dark:hover:border-purple-800 transition-all duration-300"
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-purple-100 to-blue-100 dark:from-purple-900/50 dark:to-blue-900/50 text-purple-600 dark:text-purple-400">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex flex-col items-center gap-1">
+                      <span className="text-2xl md:text-3xl font-bold text-neutral-900 dark:text-white">
+                        <AnimatedCounter value={stat.value} suffix={stat.suffix} />
+                      </span>
+                      <span className="text-sm text-neutral-500 dark:text-neutral-400">{stat.label}</span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* App Preview */}
+          <div className={`w-full max-w-5xl transition-all duration-700 delay-500 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="relative rounded-3xl bg-gradient-to-br from-neutral-100 to-neutral-200 dark:from-neutral-800 dark:to-neutral-900 p-2 shadow-2xl">
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-purple-500/10 to-blue-500/10" />
+              <div className="relative rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 overflow-hidden">
+                {/* Browser Chrome */}
+                <div className="flex items-center gap-2 px-4 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900">
+                  <div className="flex gap-1.5">
+                    <div className="w-3 h-3 rounded-full bg-red-400" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-400" />
+                    <div className="w-3 h-3 rounded-full bg-green-400" />
+                  </div>
+                  <div className="flex-1 flex justify-center">
+                    <div className="px-4 py-1 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-xs text-neutral-500">
+                      ireader.app
+                    </div>
+                  </div>
+                </div>
+                {/* App Content Placeholder */}
+                <div className="aspect-[16/9] bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-purple-950/20 dark:via-neutral-900 dark:to-blue-950/20 flex items-center justify-center">
+                  <div className="flex flex-col items-center gap-4 text-neutral-400">
+                    <Play className="w-16 h-16 opacity-20" />
+                    <span className="text-sm">App Preview</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
+
+      {/* Bottom Fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white dark:from-[#0a0a0b] to-transparent pointer-events-none" />
     </section>
   );
 }

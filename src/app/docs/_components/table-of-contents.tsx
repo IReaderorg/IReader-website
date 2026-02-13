@@ -57,21 +57,21 @@ const TableOfContents: FC<TableOfContentsProps> = ({ headings }) => {
   }
 
   return (
-    <aside className="sticky top-28 hidden h-fit max-h-[80vh] overflow-y-auto border-l border-[color-mix(in_srgb,_var(--color-border)_60%,_transparent)] pl-6 xl:block">
-      <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[color-mix(in_srgb,_var(--color-muted)_72%,_transparent)]">
+    <aside className="sticky top-28 hidden h-fit max-h-[80vh] overflow-y-auto border-l border-[var(--border-strong)] pl-6 xl:block">
+      <span className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
         On this page
       </span>
-      <nav className="mt-4 flex flex-col gap-2 text-sm text-[color-mix(in_srgb,_var(--color-foreground)_62%,_transparent)]">
+      <nav className="mt-4 flex flex-col gap-2 text-sm text-[var(--foreground-muted)]">
         {items.map((heading) => (
           <a
             key={heading.id}
             href={`#${heading.id}`}
             className={clsx(
-              "block border-l border-transparent transition-colors",
+              "block border-l-2 border-transparent py-1 pl-3 transition-all duration-200",
               heading.level > 2 ? "ml-3" : "ml-0",
               activeId === heading.id
-                ? "border-[var(--color-accent-soft)] font-semibold text-[var(--color-accent-strong)]"
-                : "hover:text-[var(--color-foreground)]"
+                ? "border-[var(--brand-primary)] font-semibold text-[var(--brand-primary)]"
+                : "hover:text-[var(--foreground)] hover:border-[var(--border-strong)]"
             )}
           >
             {heading.title}

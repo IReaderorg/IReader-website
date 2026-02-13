@@ -21,13 +21,13 @@ export default function DocsSidebar({
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-6">
       {sections.map(({ title, links }) => (
-        <div key={title} className="flex flex-col gap-1.5">
-          <span className="text-[0.72rem] font-semibold uppercase tracking-[0.14em] text-[color-mix(in_srgb,_var(--color-muted)_68%,_transparent)]">
+        <div key={title} className="flex flex-col gap-2">
+          <span className="text-xs font-semibold uppercase tracking-wider text-[var(--foreground-muted)]">
             {title}
           </span>
-          <nav className="flex flex-col gap-1 text-[0.9rem]">
+          <nav className="flex flex-col gap-1">
             {links.map(({ href, label }) => {
               const isActive = pathname === href;
 
@@ -36,10 +36,10 @@ export default function DocsSidebar({
                   key={href}
                   href={href}
                   className={clsx(
-                    "px-1.5 py-1 transition-colors",
+                    "px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "font-semibold text-[var(--color-accent-strong)]"
-                      : "text-[color-mix(in_srgb,_var(--color-foreground)_60%,_transparent)] hover:text-[var(--color-foreground)]"
+                      ? "bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white shadow-md"
+                      : "text-[var(--foreground-muted)] hover:text-[var(--foreground)] hover:bg-[var(--background-soft)]"
                   )}
                 >
                   {label}
