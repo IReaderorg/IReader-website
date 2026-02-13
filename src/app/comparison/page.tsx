@@ -25,7 +25,7 @@ export default function ComparisonPage() {
           
           <p className="text-lg text-gray-600 mb-12">
             Choosing the right reader app can make a huge difference in your reading experience. 
-            Here's how IReader compares to other popular reader apps for Android and Desktop.
+            Here&apos;s how IReader compares to other popular reader apps for Android and Desktop.
           </p>
 
           <section className="mb-12">
@@ -167,7 +167,7 @@ export default function ComparisonPage() {
                 <h3 className="text-2xl font-semibold mb-3">IReader vs ReadEra</h3>
                 <p className="text-gray-700 mb-3">
                   ReadEra is known for its clean interface and support for multiple formats. However, 
-                  it's closed-source and includes ads in the free version. IReader offers similar format 
+                  it&apos;s closed-source and includes ads in the free version. IReader offers similar format 
                   support with additional features like Text-to-Speech and multi-source novel access.
                 </p>
                 <p className="text-gray-700">
@@ -194,7 +194,7 @@ export default function ComparisonPage() {
           <section className="mb-12 bg-gradient-to-r from-blue-50 to-purple-50 p-8 rounded-lg">
             <h2 className="text-3xl font-semibold mb-4">The Verdict</h2>
             <p className="text-lg text-gray-700 mb-4">
-              If you're looking for the best reader app that's completely free, respects your privacy, 
+              If you&apos;re looking for the best reader app that&apos;s completely free, respects your privacy, 
               and offers extensive customization, IReader is the clear choice. It combines the best 
               features of commercial apps with the transparency and freedom of open-source software.
             </p>
@@ -221,7 +221,7 @@ export default function ComparisonPage() {
                 <h3 className="text-xl font-semibold mb-2">Which reader app is best for Android?</h3>
                 <p className="text-gray-700">
                   IReader is the best open-source reader app for Android, offering offline reading, 
-                  customizable themes, no ads, and complete privacy. It's perfect for light novel and 
+                  customizable themes, no ads, and complete privacy. It&apos;s perfect for light novel and 
                   web novel enthusiasts.
                 </p>
               </div>
@@ -236,9 +236,9 @@ export default function ComparisonPage() {
               </div>
               
               <div>
-                <h3 className="text-xl font-semibold mb-2">What's the best free reader app without ads?</h3>
+                <h3 className="text-xl font-semibold mb-2">What&apos;s the best free reader app without ads?</h3>
                 <p className="text-gray-700">
-                  IReader is the best free reader app with no ads. Unlike other "free" reader apps that 
+                  IReader is the best free reader app with no ads. Unlike other &quot;free&quot; reader apps that 
                   show ads or require premium purchases, IReader is completely free forever with all 
                   features unlocked.
                 </p>
