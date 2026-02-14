@@ -9,7 +9,6 @@ import type { FocusEvent, MouseEvent } from "react";
 import { ChevronDown, Download, Github, ExternalLink } from "lucide-react";
 
 import NavigationDrawer from "./navigation-drawer";
-import { ThemeToggle } from "@/components/theme-toggle";
 
 interface PageChromeProps {
   readonly children: React.ReactNode;
@@ -226,7 +225,6 @@ export default function PageChrome({
 
             {/* Right Side Actions */}
             <div className="flex items-center gap-3">
-              <ThemeToggle />
               <Link
                 href="https://github.com/IReaderorg/IReader/releases"
                 className="hidden sm:inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-purple-600 to-blue-500 px-5 py-2.5 min-h-[44px] text-sm font-semibold text-white shadow-lg shadow-purple-500/25 transition-all duration-300 hover:shadow-xl hover:scale-[1.02]"

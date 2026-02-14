@@ -136,7 +136,7 @@ export default function RootLayout({
               (function() {
                 try {
                   var theme = localStorage.getItem('theme');
-                  if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  if (theme === 'dark') {
                     document.documentElement.classList.remove('light', 'dark');
                     document.documentElement.classList.add('dark');
                     document.documentElement.style.colorScheme = 'dark';
